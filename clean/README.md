@@ -1,8 +1,8 @@
 # clean architecture
 
 ## overall
-controller -> usecase -> entity
-    |          |
+controller -> usecase -> entity  
+    |          |  
      repository
 
 ## entity
@@ -14,7 +14,7 @@ controller -> usecase -> entity
 - repository層にてCRUDを実施する
 - validationを実施
 - controllertに返すデータに変換する
--
+
 ## controller
 - controller.goでhttp通信を前提として、usecaseに渡すデータを作成する
 - usecaseから取得したデータをresponseに返すようにする
