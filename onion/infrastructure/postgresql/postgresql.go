@@ -1,9 +1,9 @@
 package postgresql
 
 import (
+	"architecture/onion/domain"
+	"architecture/onion/repository"
 	"database/sql"
-	"onion-architecture/domain"
-	"onion-architecture/repository"
 )
 
 var db *sql.DB

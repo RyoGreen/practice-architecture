@@ -1,6 +1,6 @@
 package repository
 
-import "onion-architecture/domain"
+import "architecture/onion/domain"
 
 type JobRepository interface {
 	FindAll() ([]*domain.Job, error)

@@ -1,9 +1,9 @@
 package presentation
 
 import (
-	"onion-architecture/application"
-	"onion-architecture/domain"
-	"onion-architecture/repository"
+	"architecture/onion/application"
+	"architecture/onion/domain"
+	"architecture/onion/repository"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
