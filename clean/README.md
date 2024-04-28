@@ -1,8 +1,13 @@
-## clean architecture
+# clean architecture
+
+## overall
+controller -> usecase -> entity
+    |          |
+     repository
 
 ## entity
 - staffのビジネスモデルを作成
-- ビジネスルールとしてもvalidationを作成
+- 例としてビジネスルールとしてvalidationを作成
 
 ## usecase
 - controllerから渡されるデータをentityのデータに変換
