@@ -45,7 +45,7 @@ func (r *JobRepositoryPostgres) FindAll() ([]*domain.Job, error) {
 		jobs = append(jobs, &job)
 	}
 
-	return nil, nil
+	return jobs, nil
 }
 
 func (r *JobRepositoryPostgres) FindByID(id int) (*domain.Job, error) {
