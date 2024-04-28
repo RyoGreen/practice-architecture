@@ -4,6 +4,8 @@ import (
 	"architecture/onion/domain"
 	"architecture/onion/repository"
 	"database/sql"
+
+	_ "github.com/lib/pq"
 )
 
 var db *sql.DB
