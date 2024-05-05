@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"architecture/clean/controller/in"
-	"architecture/clean/repository"
-	"architecture/clean/usecase"
+	"clean-architecture/controller/in"
+	"clean-architecture/repository"
+	"clean-architecture/usecase"
 	"encoding/json"
 	"errors"
 	"net/http"

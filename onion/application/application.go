@@ -1,8 +1,8 @@
 package application
 
 import (
-	"architecture/onion/domain"
-	"architecture/onion/repository"
+	"onion-architecture/domain"
+	"onion-architecture/repository"
 )
 
 type JobApplication interface {

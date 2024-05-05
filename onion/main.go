@@ -1,9 +1,9 @@
 package main
 
 import (
-	"architecture/onion/infrastructure/postgresql"
-	"architecture/onion/presentation"
 	"log"
+	"onion-architecture/infrastructure/postgresql"
+	"onion-architecture/presentation"
 )
 
 func main() {

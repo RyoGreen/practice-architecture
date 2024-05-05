@@ -1,9 +1,8 @@
 package mysql
 
 import (
-	"architecture/clean/entity"
-	"architecture/clean/repository"
-
+	"clean-architecture/entity"
+	"clean-architecture/repository"
 	"database/sql"
 	"time"
 

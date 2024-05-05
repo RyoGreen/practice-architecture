@@ -1,10 +1,10 @@
 package usecase
 
 import (
-	"architecture/clean/controller/in"
-	"architecture/clean/controller/out"
-	"architecture/clean/entity"
-	"architecture/clean/repository"
+	"clean-architecture/controller/in"
+	"clean-architecture/controller/out"
+	"clean-architecture/entity"
+	"clean-architecture/repository"
 )
 
 type StaffUsecase interface {

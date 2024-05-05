@@ -1,7 +1,7 @@
 package main
 
 import (
-	"architecture/clean/controller"
+	"clean-architecture/controller"
 	"log/slog"
 	"net/http"
 )
