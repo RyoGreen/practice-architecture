@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"architecture/clean/entity"
+	"clean-architecture/entity"
 	"errors"
 )
 
