@@ -10,19 +10,11 @@ import (
 	"strconv"
 )
 
-type StaffController interface {
-	List(w http.ResponseWriter, r *http.Request)
-	Get(w http.ResponseWriter, r *http.Request)
-	Create(w http.ResponseWriter, r *http.Request)
-	Update(w http.ResponseWriter, r *http.Request)
-	Delete(w http.ResponseWriter, r *http.Request)
-}
-
 type staffController struct {
 	staffUseCase usecase.StaffUsecase
 }
 
-func NewStaffController() StaffController {
+func NewStaffController() *staffController {
 	return &staffController{
 		staffUseCase: usecase.NewStaffUseCase(),
 	}

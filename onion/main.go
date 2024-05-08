@@ -6,6 +6,8 @@ import (
 	"onion-architecture/presentation"
 )
 
+type test struct{}
+
 func main() {
 	if err := postgresql.Init(); err != nil {
 		log.Println(err)

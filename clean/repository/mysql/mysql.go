@@ -2,7 +2,6 @@ package mysql
 
 import (
 	"clean-architecture/entity"
-	"clean-architecture/repository"
 	"database/sql"
 	"time"
 
@@ -35,7 +34,7 @@ func Init() error {
 type staffRepositoryMysql struct {
 }
 
-func NewStaffRepositoryMysql(config *mysql.Config) repository.StaffRepository {
+func NewStaffRepositoryMysql() entity.StaffRepository {
 	return &staffRepositoryMysql{}
 }
 

@@ -1,35 +1,22 @@
-package repository
+package dbmap
 
 import (
 	"clean-architecture/entity"
-	"errors"
+	"clean-architecture/repository"
 )
-
-type StaffRepository interface {
-	List() ([]*entity.Staff, error)
-	Get(id int) (*entity.Staff, error)
-	Create(*entity.Staff) (*entity.Staff, error)
-	Update(*entity.Staff) (*entity.Staff, error)
-	Delete(id int) error
-}
 
 type staffRepositoryMap struct {
 }
 
-func NewStaffRepositoryMap() StaffRepository {
+func NewStaffRepositoryMap() entity.StaffRepository {
 	return &staffRepositoryMap{}
 }
 
-var staffsMap = map[int]entity.Staff{}
-
-var (
-	ErrStaffNotFound = errors.New("Staff not found")
-	ErrStaffExists   = errors.New("Staff already exists")
-)
+var staffsMap = map[int]*entity.Staff{}
 
 func (r *staffRepositoryMap) List() ([]*entity.Staff, error) {
 	staffs := make([]*entity.Staff, 0, len(staffsMap))
-	for _, v := range staffs {
+	for _, v := range staffsMap {
 		staffs = append(staffs, v)
 	}
 	return staffs, nil
@@ -37,30 +24,30 @@ func (r *staffRepositoryMap) List() ([]*entity.Staff, error) {
 
 func (r *staffRepositoryMap) Get(id int) (*entity.Staff, error) {
 	if v, ok := staffsMap[id]; ok {
-		return &v, nil
+		return v, nil
 	}
-	return nil, ErrStaffNotFound
+	return nil, repository.ErrStaffNotFound
 }
 
 func (r *staffRepositoryMap) Create(staff *entity.Staff) (*entity.Staff, error) {
 	if _, ok := staffsMap[staff.ID]; ok {
-		return nil, ErrStaffExists
+		return nil, repository.ErrStaffExists
 	}
-	staffsMap[staff.ID] = *staff
+	staffsMap[staff.ID] = staff
 	return staff, nil
 }
 
 func (r *staffRepositoryMap) Update(staff *entity.Staff) (*entity.Staff, error) {
 	if _, ok := staffsMap[staff.ID]; !ok {
-		return nil, ErrStaffNotFound
+		return nil, repository.ErrStaffNotFound
 	}
-	staffsMap[staff.ID] = *staff
+	staffsMap[staff.ID] = staff
 	return staff, nil
 }
 
 func (r *staffRepositoryMap) Delete(id int) error {
 	if _, ok := staffsMap[id]; !ok {
-		return ErrStaffNotFound
+		return repository.ErrStaffNotFound
 	}
 	delete(staffsMap, id)
 	return nil

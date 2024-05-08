@@ -11,6 +11,14 @@ type Staff struct {
 	Email string `json:"email"`
 }
 
+type StaffRepository interface {
+	List() ([]*Staff, error)
+	Get(id int) (*Staff, error)
+	Create(*Staff) (*Staff, error)
+	Update(*Staff) (*Staff, error)
+	Delete(id int) error
+}
+
 var (
 	ErrStaffValidate = fmt.Errorf("staff name or email is empty")
 	ErrStaffEmail    = fmt.Errorf("staff email is invalid")
