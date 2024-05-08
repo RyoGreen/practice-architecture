@@ -1,5 +1,5 @@
 # architecture_overview
 
-[clean-architecture](https://github.com/RyoGreen/practice-architecture/tree/feat/readme/clean)
+[clean-architecture](https://github.com/RyoGreen/practice-architecture/tree/main/clean)
 
-[onion-architecture](https://github.com/RyoGreen/practice-architecture/tree/feat/readme/onion)
+[onion-architecture](https://github.com/RyoGreen/practice-architecture/tree/main/onion)
