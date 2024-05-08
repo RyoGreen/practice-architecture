@@ -2,8 +2,7 @@ package main
 
 import (
 	"clean-architecture/controller"
-	"clean-architecture/postgres"
-
+	"clean-architecture/infrastructure/postgres"
 	"log/slog"
 	"net/http"
 )
