@@ -4,7 +4,7 @@ import (
 	"clean-architecture/controller/in"
 	"clean-architecture/controller/out"
 	"clean-architecture/entity"
-	"clean-architecture/postgres"
+	"clean-architecture/infrastructure/postgres"
 	"clean-architecture/repository"
 )
 
