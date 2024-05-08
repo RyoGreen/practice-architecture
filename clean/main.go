@@ -2,13 +2,14 @@ package main
 
 import (
 	"clean-architecture/controller"
-	"clean-architecture/repository/mysql"
+	"clean-architecture/postgres"
+
 	"log/slog"
 	"net/http"
 )
 
 func main() {
-	if err := mysql.Init(); err != nil {
+	if err := postgres.Init(); err != nil {
 		slog.Error(err.Error())
 		return
 	}

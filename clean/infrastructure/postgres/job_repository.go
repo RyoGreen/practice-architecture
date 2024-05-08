@@ -1,44 +1,20 @@
-package mysql
+package postgres
 
 import (
 	"clean-architecture/entity"
-	"database/sql"
-	"time"
+	"clean-architecture/repository"
 
-	"github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
-
-func Init() error {
-	jst, err := time.LoadLocation("Asia/Tokyo")
-	if err != nil {
-		return err
-	}
-	c := mysql.Config{
-		DBName:    "clean_architecture",
-		User:      "user",
-		Passwd:    "password",
-		Addr:      "localhost:3306",
-		Net:       "tcp",
-		ParseTime: true,
-		Loc:       jst,
-	}
-	db, err = sql.Open("mysql", c.FormatDSN())
-	if err != nil {
-		return err
-	}
-	return nil
+type staffRepositoryPostgres struct {
 }
 
-type staffRepositoryMysql struct {
+func NewStaffRepositoryPostgres() repository.StaffRepository {
+	return &staffRepositoryPostgres{}
 }
 
-func NewStaffRepositoryMysql() entity.StaffRepository {
-	return &staffRepositoryMysql{}
-}
-
-func (r *staffRepositoryMysql) List() ([]*entity.Staff, error) {
+func (r *staffRepositoryPostgres) List() ([]*entity.Staff, error) {
 	query := "SELECT id, name, email FROM staff"
 	rows, err := db.Query(query)
 	if err != nil {
@@ -56,7 +32,7 @@ func (r *staffRepositoryMysql) List() ([]*entity.Staff, error) {
 	return staffs, nil
 }
 
-func (r *staffRepositoryMysql) Get(id int) (*entity.Staff, error) {
+func (r *staffRepositoryPostgres) Get(id int) (*entity.Staff, error) {
 	query := "SELECT id, name, email FROM staff WHERE id = ?"
 	row := db.QueryRow(query, id)
 	var staff entity.Staff
@@ -66,7 +42,7 @@ func (r *staffRepositoryMysql) Get(id int) (*entity.Staff, error) {
 	return &staff, nil
 }
 
-func (r *staffRepositoryMysql) Create(staff *entity.Staff) (*entity.Staff, error) {
+func (r *staffRepositoryPostgres) Create(staff *entity.Staff) (*entity.Staff, error) {
 	query := "INSERT INTO staff (name, email) VALUES (?, ?)"
 	result, err := db.Exec(query, staff.Name, staff.Email)
 	if err != nil {
@@ -80,7 +56,7 @@ func (r *staffRepositoryMysql) Create(staff *entity.Staff) (*entity.Staff, error
 	return staff, nil
 }
 
-func (r *staffRepositoryMysql) Update(staff *entity.Staff) (*entity.Staff, error) {
+func (r *staffRepositoryPostgres) Update(staff *entity.Staff) (*entity.Staff, error) {
 	query := "UPDATE staff SET name = ?, email = ? WHERE id = ?"
 	_, err := db.Exec(query, staff.Name, staff.Email, staff.ID)
 	if err != nil {
@@ -89,7 +65,7 @@ func (r *staffRepositoryMysql) Update(staff *entity.Staff) (*entity.Staff, error
 	return staff, nil
 }
 
-func (r *staffRepositoryMysql) Delete(id int) error {
+func (r *staffRepositoryPostgres) Delete(id int) error {
 	query := "DELETE FROM staff WHERE id = ?"
 	_, err := db.Exec(query, id)
 	if err != nil {

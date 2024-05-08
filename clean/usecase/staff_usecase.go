@@ -4,7 +4,8 @@ import (
 	"clean-architecture/controller/in"
 	"clean-architecture/controller/out"
 	"clean-architecture/entity"
-	"clean-architecture/repository/mysql"
+	"clean-architecture/postgres"
+	"clean-architecture/repository"
 )
 
 type StaffUsecase interface {
@@ -16,12 +17,12 @@ type StaffUsecase interface {
 }
 
 type StaffUsecaseImpl struct {
-	staffRepo entity.StaffRepository
+	staffRepo repository.StaffRepository
 }
 
 func NewStaffUseCase() StaffUsecase {
 	return &StaffUsecaseImpl{
-		staffRepo: mysql.NewStaffRepositoryMysql(),
+		staffRepo: postgres.NewStaffRepositoryPostgres(),
 	}
 }
 

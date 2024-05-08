@@ -2,10 +2,8 @@ package controller
 
 import (
 	"clean-architecture/controller/in"
-	"clean-architecture/repository"
 	"clean-architecture/usecase"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 )
@@ -45,10 +43,6 @@ func (c *staffController) Get(w http.ResponseWriter, r *http.Request) {
 	}
 	staff, err := c.staffUseCase.Get(idInt)
 	if err != nil {
-		if errors.Is(err, repository.ErrStaffNotFound) {
-			http.Error(w, err.Error(), http.StatusNotFound)
-			return
-		}
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
