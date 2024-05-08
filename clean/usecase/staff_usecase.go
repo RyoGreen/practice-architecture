@@ -4,6 +4,7 @@ import (
 	"clean-architecture/controller/in"
 	"clean-architecture/controller/out"
 	"clean-architecture/entity"
+	"clean-architecture/infrastructure/postgres"
 	"clean-architecture/repository"
 )
 
@@ -19,9 +20,9 @@ type StaffUsecaseImpl struct {
 	staffRepo repository.StaffRepository
 }
 
-func NewStaffUseCase() *StaffUsecaseImpl {
+func NewStaffUseCase() StaffUsecase {
 	return &StaffUsecaseImpl{
-		staffRepo: repository.NewStaffRepositoryMap(),
+		staffRepo: postgres.NewStaffRepositoryPostgres(),
 	}
 }
 

@@ -2,16 +2,16 @@ package main
 
 import (
 	"clean-architecture/controller"
+	"clean-architecture/infrastructure/postgres"
 	"log/slog"
 	"net/http"
 )
 
 func main() {
-	// mysqlを使う場合は最初にInit関数を呼び出す
-	// if err := mysql.Init(); err != nil {
-	// 	slog.Error(err.Error())
-	// 	return
-	// }
+	if err := postgres.Init(); err != nil {
+		slog.Error(err.Error())
+		return
+	}
 	controller := controller.NewStaffController()
 	http.HandleFunc("/", controller.List)
 	http.HandleFunc("/get", controller.Get)

@@ -2,27 +2,17 @@ package controller
 
 import (
 	"clean-architecture/controller/in"
-	"clean-architecture/repository"
 	"clean-architecture/usecase"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 )
-
-type StaffController interface {
-	List(w http.ResponseWriter, r *http.Request)
-	Get(w http.ResponseWriter, r *http.Request)
-	Create(w http.ResponseWriter, r *http.Request)
-	Update(w http.ResponseWriter, r *http.Request)
-	Delete(w http.ResponseWriter, r *http.Request)
-}
 
 type staffController struct {
 	staffUseCase usecase.StaffUsecase
 }
 
-func NewStaffController() StaffController {
+func NewStaffController() *staffController {
 	return &staffController{
 		staffUseCase: usecase.NewStaffUseCase(),
 	}
@@ -53,10 +43,6 @@ func (c *staffController) Get(w http.ResponseWriter, r *http.Request) {
 	}
 	staff, err := c.staffUseCase.Get(idInt)
 	if err != nil {
-		if errors.Is(err, repository.ErrStaffNotFound) {
-			http.Error(w, err.Error(), http.StatusNotFound)
-			return
-		}
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
