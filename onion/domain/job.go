@@ -1,12 +1,14 @@
 package domain
 
-import "errors"
+import (
+	"errors"
+)
 
 type Job struct {
-	ID      int
-	Name    string
-	Content string
-	Salary  int
+	ID            int
+	Name          string
+	Content       string
+	SecretContent string
 }
 
 func (j *Job) Validate() error {
@@ -16,8 +18,18 @@ func (j *Job) Validate() error {
 	if j.Content == "" {
 		return errors.New("content is required")
 	}
-	if j.Salary > 0 {
-		return errors.New("salary must be greater than 0")
-	}
 	return nil
+}
+
+func NewJob(id int, name, content, secretContent string) (*Job, error) {
+	j := &Job{
+		ID:            id,
+		Name:          name,
+		Content:       content,
+		SecretContent: secretContent,
+	}
+	if err := j.Validate(); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
