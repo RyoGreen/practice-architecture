@@ -15,7 +15,7 @@ func NewStaffRepositoryPostgres() repository.StaffRepository {
 }
 
 func (r *staffRepositoryPostgres) List() ([]*entity.Staff, error) {
-	query := "SELECT id, name, email FROM staff"
+	query := "SELECT * FROM staff"
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (r *staffRepositoryPostgres) List() ([]*entity.Staff, error) {
 }
 
 func (r *staffRepositoryPostgres) Get(id int) (*entity.Staff, error) {
-	query := "SELECT id, name, email FROM staff WHERE id = ?"
+	query := "SELECT * FROM staff WHERE id = ?"
 	row := db.QueryRow(query, id)
 	var staff entity.Staff
 	if err := row.Scan(&staff.ID, &staff.Name, &staff.Email); err != nil {
@@ -43,8 +43,8 @@ func (r *staffRepositoryPostgres) Get(id int) (*entity.Staff, error) {
 }
 
 func (r *staffRepositoryPostgres) Create(staff *entity.Staff) (*entity.Staff, error) {
-	query := "INSERT INTO staff (name, email) VALUES (?, ?)"
-	result, err := db.Exec(query, staff.Name, staff.Email)
+	query := "INSERT INTO staff (name, email, address, salary) VALUES (?, ?, ?, ?)"
+	result, err := db.Exec(query, staff.Name, staff.Email, staff.Adddress, staff.Salary)
 	if err != nil {
 		return nil, err
 	}

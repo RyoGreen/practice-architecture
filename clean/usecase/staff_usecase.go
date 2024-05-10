@@ -9,7 +9,7 @@ import (
 )
 
 type StaffUsecase interface {
-	List() ([]*out.StaffResponse, error)
+	List() ([]*out.StaffOverviewResponse, error)
 	Get(id int) (*out.StaffResponse, error)
 	Create(*in.StaffRequest) (*out.StaffResponse, error)
 	Update(*in.StaffRequest) (*out.StaffResponse, error)
@@ -26,20 +26,43 @@ func NewStaffUseCase() StaffUsecase {
 	}
 }
 
-func (u *StaffUsecaseImpl) List() ([]*out.StaffResponse, error) {
+type staffOverview struct {
+	ID    int
+	Name  string
+	Email string
+}
+
+func (so *staffOverview) SomeFunction() {
+	// something to do
+}
+
+func (u *StaffUsecaseImpl) List() ([]*out.StaffOverviewResponse, error) {
 	staffs, err := u.staffRepo.List()
 	if err != nil {
 		return nil, err
 	}
-	var staffResponses []*out.StaffResponse
+
+	var staffOverviews []*staffOverview
 	for _, staff := range staffs {
-		staffResponses = append(staffResponses, &out.StaffResponse{
+		so := &staffOverview{
 			ID:    staff.ID,
 			Name:  staff.Name,
 			Email: staff.Email,
+		}
+		so.SomeFunction()
+		staffOverviews = append(staffOverviews, so)
+	}
+
+	var staffOverviewsReponse []*out.StaffOverviewResponse
+	for _, v := range staffOverviews {
+		staffOverviewsReponse = append(staffOverviewsReponse, &out.StaffOverviewResponse{
+			ID:    v.ID,
+			Name:  v.Name,
+			Email: v.Email,
 		})
 	}
-	return staffResponses, nil
+
+	return staffOverviewsReponse, nil
 }
 
 func (u *StaffUsecaseImpl) Get(id int) (*out.StaffResponse, error) {
@@ -55,46 +78,72 @@ func (u *StaffUsecaseImpl) Get(id int) (*out.StaffResponse, error) {
 }
 
 func (u *StaffUsecaseImpl) Create(staff *in.StaffRequest) (*out.StaffResponse, error) {
-	s := &entity.Staff{
-		ID:    staff.ID,
-		Name:  staff.Name,
-		Email: staff.Email,
-	}
-	if err := s.Validate(); err != nil {
+	s, err := entity.NewStaff(staff.ID, staff.Salary, staff.Name, staff.Email, staff.Address)
+	if err != nil {
 		return nil, err
 	}
+
 	createdStaff, err := u.staffRepo.Create(s)
 	if err != nil {
 		return nil, err
 	}
+
 	return &out.StaffResponse{
-		ID:    createdStaff.ID,
-		Name:  createdStaff.Name,
-		Email: createdStaff.Email,
+		ID:      createdStaff.ID,
+		Name:    createdStaff.Name,
+		Email:   createdStaff.Email,
+		Salary:  createdStaff.Salary,
+		Address: createdStaff.Adddress,
 	}, nil
 }
 
 func (u *StaffUsecaseImpl) Update(staff *in.StaffRequest) (*out.StaffResponse, error) {
-	s := &entity.Staff{
-		ID:    staff.ID,
-		Name:  staff.Name,
-		Email: staff.Email,
-	}
-	if err := s.Validate(); err != nil {
+	s, err := entity.NewStaff(staff.ID, staff.Salary, staff.Name, staff.Email, staff.Address)
+	if err != nil {
 		return nil, err
 	}
+
 	updatedStaff, err := u.staffRepo.Update(s)
 	if err != nil {
 		return nil, err
 	}
 
 	return &out.StaffResponse{
-		ID:    updatedStaff.ID,
-		Name:  updatedStaff.Name,
-		Email: updatedStaff.Email,
+		ID:      updatedStaff.ID,
+		Name:    updatedStaff.Name,
+		Email:   updatedStaff.Email,
+		Salary:  updatedStaff.Salary,
+		Address: updatedStaff.Adddress,
 	}, nil
 }
 
 func (u *StaffUsecaseImpl) Delete(staffID *in.DeleteStaffRequest) error {
 	return u.staffRepo.Delete(staffID.ID)
+}
+
+type StaffUsecaseFake struct {
+}
+
+func NewStaffUsecaseFake() StaffUsecase {
+	return StaffUsecaseFake{}
+}
+
+func (s StaffUsecaseFake) List() ([]*out.StaffOverviewResponse, error) {
+	return []*out.StaffOverviewResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Get(id int) (*out.StaffResponse, error) {
+	return &out.StaffResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Create(in *in.StaffRequest) (*out.StaffResponse, error) {
+	return &out.StaffResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Update(in *in.StaffRequest) (*out.StaffResponse, error) {
+	return &out.StaffResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Delete(*in.DeleteStaffRequest) error {
+	return nil
 }

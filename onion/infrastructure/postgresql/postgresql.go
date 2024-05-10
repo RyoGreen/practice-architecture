@@ -38,7 +38,7 @@ func (r *JobRepositoryPostgres) FindAll() ([]*domain.Job, error) {
 	var jobs []*domain.Job
 	for rows.Next() {
 		var job domain.Job
-		err := rows.Scan(&job.ID, &job.Name, &job.Content, &job.Salary)
+		err := rows.Scan(&job.ID, &job.Name, &job.Content, &job.SecretContent)
 		if err != nil {
 			return nil, err
 		}
@@ -51,7 +51,7 @@ func (r *JobRepositoryPostgres) FindAll() ([]*domain.Job, error) {
 func (r *JobRepositoryPostgres) FindByID(id int) (*domain.Job, error) {
 	row := db.QueryRow("SELECT * FROM jobs WHERE id = ?", id)
 	var job domain.Job
-	err := row.Scan(&job.ID, &job.Name, &job.Content, &job.Salary)
+	err := row.Scan(&job.ID, &job.Name, &job.Content, &job.SecretContent)
 	if err != nil {
 		return nil, err
 	}
@@ -59,14 +59,14 @@ func (r *JobRepositoryPostgres) FindByID(id int) (*domain.Job, error) {
 }
 
 func (r *JobRepositoryPostgres) Save(job *domain.Job) error {
-	if _, err := db.Exec("INSERT INTO jobs (name, content, salary) VALUES (?, ?, ?)", job.Name, job.Content, job.Salary); err != nil {
+	if _, err := db.Exec("INSERT INTO jobs (name, content, secret_content) VALUES (?, ?, ?)", job.Name, job.Content, job.SecretContent); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (r *JobRepositoryPostgres) Update(job *domain.Job) error {
-	if _, err := db.Exec("UPDATE jobs SET name = ?, content = ?, salary = ? WHERE id = ?", job.Name, job.Content, job.Salary, job.ID); err != nil {
+	if _, err := db.Exec("UPDATE jobs SET name = ?, content = ?, secret_content = ? WHERE id = ?", job.Name, job.Content, job.SecretContent, job.ID); err != nil {
 		return err
 	}
 	return nil
