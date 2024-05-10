@@ -120,3 +120,30 @@ func (u *StaffUsecaseImpl) Update(staff *in.StaffRequest) (*out.StaffResponse, e
 func (u *StaffUsecaseImpl) Delete(staffID *in.DeleteStaffRequest) error {
 	return u.staffRepo.Delete(staffID.ID)
 }
+
+type StaffUsecaseFake struct {
+}
+
+func NewStaffUsecaseFake() StaffUsecase {
+	return StaffUsecaseFake{}
+}
+
+func (s StaffUsecaseFake) List() ([]*out.StaffOverviewResponse, error) {
+	return []*out.StaffOverviewResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Get(id int) (*out.StaffResponse, error) {
+	return &out.StaffResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Create(in *in.StaffRequest) (*out.StaffResponse, error) {
+	return &out.StaffResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Update(in *in.StaffRequest) (*out.StaffResponse, error) {
+	return &out.StaffResponse{}, nil
+}
+
+func (s StaffUsecaseFake) Delete(*in.DeleteStaffRequest) error {
+	return nil
+}
