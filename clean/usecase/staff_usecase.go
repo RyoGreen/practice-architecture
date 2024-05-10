@@ -41,6 +41,7 @@ func (u *StaffUsecaseImpl) List() ([]*out.StaffOverviewResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	var staffOverviews []*staffOverview
 	for _, staff := range staffs {
 		so := &staffOverview{
